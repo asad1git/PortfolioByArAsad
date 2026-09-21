@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useSystemStore } from "@/store/useSystemStore";
 import { ArrowDownRight, Terminal } from "lucide-react";
 
@@ -55,6 +55,20 @@ export function Hero() {
         { opacity: 1, duration: 0.8 },
         "-=0.4"
       );
+
+      // Exploration cue is fully visible when scroll is on top, and smoothly fades as user scrolls
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=160",
+        onUpdate: (self) => {
+          if (footerRef.current) {
+            const opacity = Math.max(0, 1 - self.progress * 1.8);
+            footerRef.current.style.opacity = String(opacity);
+            footerRef.current.style.pointerEvents = opacity < 0.1 ? "none" : "auto";
+          }
+        },
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -65,7 +79,7 @@ export function Hero() {
       id="hero"
       ref={containerRef}
       data-component="<Hero />"
-      className="relative flex h-[100svh] min-h-[640px] w-full flex-col justify-between overflow-hidden px-4 pb-8 pt-16 md:px-8"
+      className="relative flex h-[calc(100svh-3rem)] min-h-[520px] w-full flex-col justify-between overflow-hidden px-4 pb-3 pt-2 md:px-8 md:pb-5 md:pt-3"
     >
       {/* Three.js 3D Particle Field background */}
       <HeroScene />
@@ -87,11 +101,11 @@ export function Hero() {
       </div>
 
       {/* Central Editorial Heading */}
-      <div className="relative z-10 my-auto flex flex-col justify-center py-6">
+      <div className="relative z-10 my-auto flex flex-col justify-center py-2 md:py-4">
         <h1
           ref={titleRef}
           className="editorial-title w-fit cursor-default select-none font-bold text-[#F2F2F2] opacity-0"
-          style={{ fontSize: "clamp(3.5rem, 10vw, 9.5rem)", lineHeight: 0.88 }}
+          style={{ fontSize: "clamp(3rem, 8.5vw, 8.5rem)", lineHeight: 0.9 }}
         >
           <span
             onMouseEnter={() => setCursor("hover", "ABDUL RAHMAN")}
@@ -111,7 +125,7 @@ export function Hero() {
 
         <div
           ref={subtextRef}
-          className="mt-4 max-w-2xl font-mono text-xs tracking-wider text-[#8A8A8A] opacity-0 md:text-sm"
+          className="mt-3 max-w-2xl font-mono text-xs tracking-wider text-[#8A8A8A] opacity-0 md:text-sm"
         >
           <p className="text-[#F2F2F2] font-medium tracking-wide">
             SOFTWARE ENGINEER
@@ -125,7 +139,7 @@ export function Hero() {
       {/* Bottom Exploration Cue */}
       <div
         ref={footerRef}
-        className="relative z-10 flex items-end justify-between border-t border-[#1C1C1C] pt-4 font-mono text-[11px] tracking-wider text-[#8A8A8A] opacity-0"
+        className="relative z-10 flex items-end justify-between border-t border-[#1C1C1C] pt-2.5 md:pt-3 font-mono text-[11px] tracking-wider text-[#8A8A8A] opacity-0"
       >
         <a
           href="#identity"
