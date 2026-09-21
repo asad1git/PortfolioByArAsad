@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { projects } from "@/data/projects";
 import { ArchitectureDiagram } from "@/components/projects/ArchitectureDiagram";
 import { ArrowLeft, ExternalLink, Terminal, CheckCircle2 } from "lucide-react";
+import { GithubIcon } from "@/components/ui/Icons";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -66,6 +67,35 @@ export default async function ProjectCaseStudyPage({ params }: PageProps) {
           {project.tagline}
         </p>
 
+        {/* Action Buttons for Live Demo & GitHub */}
+        {(project.liveUrl || project.githubUrl) && (
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2.5 border border-[#B6FF3B] bg-[#B6FF3B] px-5 py-2.5 font-mono text-xs font-bold tracking-wider text-[#050505] transition-all hover:bg-white hover:shadow-[0_0_20px_rgba(182,255,59,0.3)]"
+              >
+                <span>LAUNCH LIVE DEMO</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2.5 border border-[#242424] bg-[#0C0C0C] px-5 py-2.5 font-mono text-xs text-[#CCCCCC] transition-colors hover:border-[#B6FF3B] hover:text-[#B6FF3B]"
+              >
+                <GithubIcon className="h-3.5 w-3.5 text-[#B6FF3B]" />
+                <span>VIEW REPOSITORY</span>
+                <ExternalLink className="h-3 w-3 text-[#666]" />
+              </a>
+            )}
+          </div>
+        )}
+
         {/* Quick Metadata Bar */}
         <div className="mt-10 grid grid-cols-2 gap-4 border-y border-[#1A1A1A] py-6 font-mono text-xs sm:grid-cols-4">
           <div>
@@ -82,7 +112,31 @@ export default async function ProjectCaseStudyPage({ params }: PageProps) {
           </div>
           <div>
             <div className="text-[10px] text-[#555] uppercase">REPOSITORY / URL</div>
-            <div className="mt-1 text-[#B6FF3B]">CONFIDENTIAL PRODUCTION</div>
+            <div className="mt-1 space-y-1">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1 text-[#B6FF3B] hover:underline"
+                >
+                  <span className="truncate">LIVE SITE ↗</span>
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1 text-[#8A8A8A] hover:text-[#F2F2F2] hover:underline"
+                >
+                  <span className="truncate">GITHUB REPO ↗</span>
+                </a>
+              )}
+              {!project.liveUrl && !project.githubUrl && (
+                <span className="text-[#666]">CONFIDENTIAL</span>
+              )}
+            </div>
           </div>
         </div>
       </header>

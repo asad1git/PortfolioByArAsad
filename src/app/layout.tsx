@@ -93,8 +93,8 @@ export default function RootLayout({
                   "@type": "Person",
                   "name": "Abdul Rahman Asad",
                   "jobTitle": "Software Engineer",
-                  "url": "https://asad.systems",
-                  "sameAs": ["https://github.com", "https://linkedin.com"],
+                  "url": "https://portfolio-ar-lilac.vercel.app",
+                  "sameAs": ["https://github.com/asad1git", "https://linkedin.com"],
                 },
                 {
                   "@type": "WebSite",

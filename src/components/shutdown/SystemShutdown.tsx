@@ -50,13 +50,13 @@ export function SystemShutdown() {
         {/* Social / Direct Connect Links */}
         <div className="grid grid-cols-1 gap-4 border-t border-[#141414] pt-8 sm:grid-cols-3 text-xs">
           <a
-            href="https://github.com"
+            href="https://github.com/asad1git"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-3 border border-[#1A1A1A] bg-[#070707] p-4 text-[#8A8A8A] transition-colors hover:border-[#B6FF3B] hover:text-[#F2F2F2]"
           >
             <GithubIcon className="h-4 w-4 text-[#B6FF3B]" />
-            <span>GITHUB</span>
+            <span>GITHUB (@asad1git)</span>
           </a>
 
           <a

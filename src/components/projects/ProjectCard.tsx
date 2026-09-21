@@ -4,7 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { ProjectData } from "@/data/projects";
 import { useSystemStore } from "@/store/useSystemStore";
-import { ArrowUpRight, Layers } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Layers } from "lucide-react";
+import { GithubIcon } from "@/components/ui/Icons";
 
 interface ProjectCardProps {
   project: ProjectData;
@@ -21,6 +22,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       ref={cardRef}
       className="group relative border border-[#1A1A1A] bg-[#0A0A0A] p-6 transition-all duration-300 hover:border-[#B6FF3B]/50 hover:bg-[#0E0E0E] md:p-10"
     >
+      {/* Clickable Header & Blueprint Section */}
       <Link
         href={`/projects/${project.slug}`}
         onMouseEnter={() => setCursor("view", "VIEW")}
@@ -79,22 +81,50 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
           </div>
         </div>
-
-        {/* Project Metadata Footer */}
-        <div className="mt-8 flex flex-col justify-between gap-4 font-mono text-xs sm:flex-row sm:items-center">
-          <div>
-            <span className="text-[10px] text-[#555] uppercase">ENGINEERING ROLE</span>
-            <div className="mt-0.5 text-[#F2F2F2]">{project.role}</div>
-          </div>
-
-          <div className="flex items-center space-x-2 text-[#B6FF3B]">
-            <span className="text-[11px] font-semibold tracking-wider">
-              EXPLORE CASE STUDY
-            </span>
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </div>
-        </div>
       </Link>
+
+      {/* Project Metadata & Action Footer */}
+      <div className="mt-8 flex flex-col justify-between gap-4 border-t border-[#161616] pt-6 font-mono text-xs sm:flex-row sm:items-center">
+        <div>
+          <span className="text-[10px] text-[#555] uppercase">ENGINEERING ROLE</span>
+          <div className="mt-0.5 text-[#F2F2F2]">{project.role}</div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 border border-[#B6FF3B]/40 bg-[#B6FF3B]/10 px-3 py-1.5 text-[11px] font-semibold text-[#B6FF3B] transition-colors hover:border-[#B6FF3B] hover:bg-[#B6FF3B] hover:text-[#050505]"
+            >
+              <span>LIVE DEMO</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          )}
+
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 border border-[#262626] bg-[#0E0E0E] px-3 py-1.5 text-[11px] text-[#A0A0A0] transition-colors hover:border-[#444] hover:text-[#F2F2F2]"
+            >
+              <GithubIcon className="h-3 w-3 text-[#B6FF3B]" />
+              <span>GITHUB</span>
+              <ExternalLink className="h-2.5 w-2.5 text-[#666]" />
+            </a>
+          )}
+
+          <Link
+            href={`/projects/${project.slug}`}
+            className="inline-flex items-center space-x-1.5 border border-[#222] bg-[#0E0E0E] px-3 py-1.5 text-[11px] font-semibold text-[#F2F2F2] transition-colors hover:border-[#B6FF3B] hover:text-[#B6FF3B]"
+          >
+            <span>CASE STUDY</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </div>
     </article>
   );
 }
