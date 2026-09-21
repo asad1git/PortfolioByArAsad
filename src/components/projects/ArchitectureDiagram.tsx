@@ -32,30 +32,113 @@ export function ArchitectureDiagram({ nodes, edges }: ArchitectureDiagramProps) 
     return () => ctx.revert();
   }, [edges]);
 
-  // Visual layout coordinate mapper for Kaam architecture
-  const nodePositions: Record<string, { x: number; y: number }> = {
-    customer: { x: 120, y: 80 },
-    provider: { x: 120, y: 200 },
-    gateway: { x: 380, y: 140 },
-    auth: { x: 620, y: 60 },
-    db: { x: 620, y: 140 },
-    payments: { x: 620, y: 220 },
-    chat: { x: 620, y: 300 },
-    notifications: { x: 620, y: 380 },
-    // Novva fallbacks
-    student: { x: 140, y: 140 },
-    api: { x: 380, y: 140 },
-    analytics: { x: 620, y: 240 },
+  // Compute coordinate layout based on active topology
+  const getNodePositions = (): Record<string, { x: number; y: number }> => {
+    const ids = new Set(nodes.map((n) => n.id));
+
+    // Portfolio AR
+    if (ids.has("blackhole") || ids.has("vortex")) {
+      return {
+        edge: { x: 130, y: 120 },
+        timeline: { x: 130, y: 210 },
+        state: { x: 130, y: 300 },
+        router: { x: 380, y: 210 },
+        blackhole: { x: 630, y: 150 },
+        vortex: { x: 630, y: 270 },
+      };
+    }
+
+    // PakVista CI/CD
+    if (ids.has("gha") || ids.has("devs") || ids.has("staging")) {
+      return {
+        devs: { x: 130, y: 210 },
+        gha: { x: 320, y: 210 },
+        docker: { x: 500, y: 210 },
+        staging: { x: 660, y: 140 },
+        prod: { x: 660, y: 280 },
+      };
+    }
+
+    // Aura Real Estate
+    if (ids.has("webgl") || ids.has("cms") || ids.has("inquiry")) {
+      return {
+        cdn: { x: 130, y: 210 },
+        client: { x: 380, y: 210 },
+        webgl: { x: 630, y: 80 },
+        motion: { x: 630, y: 170 },
+        cms: { x: 630, y: 260 },
+        inquiry: { x: 630, y: 350 },
+      };
+    }
+
+    // Novva LMS
+    if (ids.has("frontend") || ids.has("ai") || ids.has("admin")) {
+      return {
+        frontend: { x: 130, y: 150 },
+        admin: { x: 130, y: 290 },
+        api: { x: 380, y: 150 },
+        auth: { x: 380, y: 290 },
+        db: { x: 630, y: 150 },
+        ai: { x: 630, y: 290 },
+      };
+    }
+
+    // CalculatorHub
+    if (ids.has("engine")) {
+      return {
+        client: { x: 130, y: 210 },
+        api: { x: 380, y: 210 },
+        auth: { x: 630, y: 120 },
+        engine: { x: 630, y: 210 },
+        db: { x: 630, y: 300 },
+      };
+    }
+
+    // Dynamic 3-column fallback for generic / future topologies
+    const colGroups: { client: ProjectArchitectureNode[]; service: ProjectArchitectureNode[]; integration: ProjectArchitectureNode[] } = {
+      client: [],
+      service: [],
+      integration: [],
+    };
+
+    nodes.forEach((node) => {
+      if (node.category === "client") colGroups.client.push(node);
+      else if (node.category === "service") colGroups.service.push(node);
+      else colGroups.integration.push(node);
+    });
+
+    const colX = [130, 380, 630];
+    const columns = [colGroups.client, colGroups.service, colGroups.integration];
+    const positions: Record<string, { x: number; y: number }> = {};
+
+    columns.forEach((group, colIdx) => {
+      const x = colX[colIdx];
+      const count = group.length;
+      if (count === 0) return;
+      const spacing = Math.min(110, 320 / Math.max(count, 1));
+      const startY = 220 - ((count - 1) * spacing) / 2;
+      group.forEach((node, i) => {
+        positions[node.id] = { x, y: Math.round(startY + i * spacing) };
+      });
+    });
+
+    return positions;
   };
+
+  const nodePositions = getNodePositions();
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-x-auto rounded-none border border-[#1F1F1F] bg-[#070707] p-6"
+      style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x pan-y" }}
+      className="relative w-full overflow-x-auto rounded-none border border-[#1F1F1F] bg-[#070707] p-4 sm:p-6"
     >
-      <div className="mb-4 flex items-center justify-between font-mono text-[11px] text-[#8A8A8A]">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[#8A8A8A]">
         <span className="text-[#B6FF3B]">TOPOLOGY / ARCHITECTURE GRAPH</span>
-        <span className="text-[#555]">EVENT-DRIVEN FLOW</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-[#B6FF3B] sm:hidden">↔ SWIPE TO PAN</span>
+          <span className="text-[#555]">EVENT-DRIVEN FLOW</span>
+        </div>
       </div>
 
       <div className="relative min-w-[760px] h-[440px]">

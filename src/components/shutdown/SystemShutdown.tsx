@@ -11,7 +11,7 @@ export function SystemShutdown() {
   return (
     <footer
       data-component="<SystemShutdown />"
-      className="relative z-20 border-t border-[#1C1C1C] bg-[#030303] px-4 py-24 font-mono md:px-8"
+      className="relative z-20 border-t border-[#1C1C1C] bg-[#030303] px-4 py-12 font-mono md:px-8 md:py-24"
     >
       <div className="mx-auto max-w-[1920px]">
         {/* Status indicator */}

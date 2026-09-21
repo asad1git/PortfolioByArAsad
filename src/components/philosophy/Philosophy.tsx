@@ -125,7 +125,7 @@ export function Philosophy() {
       {/* Inner container that gets pinned */}
       <div
         ref={pinContentRef}
-        className="flex h-screen w-full flex-col justify-between overflow-hidden px-4 py-8 md:px-8"
+        className="flex h-[100svh] w-full flex-col justify-between overflow-hidden px-4 py-6 md:px-8 md:py-8"
       >
         {/* Top Header & Indicator */}
         <div className="flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
@@ -161,19 +161,19 @@ export function Philosophy() {
               }}
               className="absolute inset-0 flex flex-col justify-center max-w-4xl mx-auto pointer-events-none"
             >
-              <div className="font-mono text-sm tracking-widest text-[#B6FF3B] mb-4">
+              <div className="font-mono text-xs sm:text-sm tracking-widest text-[#B6FF3B] mb-2 sm:mb-4">
                 PRINCIPLE_{p.num}
               </div>
 
-              <h2 className="font-display text-4xl font-bold tracking-tight text-[#F2F2F2] sm:text-6xl lg:text-7xl">
+              <h2 className="font-display text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#F2F2F2]">
                 {p.title}
               </h2>
 
-              <div className="mt-4 font-mono text-xs tracking-widest text-[#8A8A8A] uppercase">
+              <div className="mt-2 sm:mt-4 font-mono text-[10px] sm:text-xs tracking-widest text-[#8A8A8A] uppercase">
                 {p.subtitle}
               </div>
 
-              <p className="mt-8 max-w-2xl text-base leading-relaxed text-[#A0A0A0] md:text-lg">
+              <p className="mt-4 sm:mt-8 max-w-2xl text-xs sm:text-base leading-relaxed text-[#A0A0A0] md:text-lg">
                 {p.text}
               </p>
             </div>
@@ -181,8 +181,10 @@ export function Philosophy() {
         </div>
 
         {/* Bottom Technical Status */}
-        <div className="flex items-center justify-between border-t border-[#1C1C1C] pt-4 font-mono text-[11px] text-[#555]">
-          <span>SCROLL DOWN TO CYCLE PRINCIPLES</span>
+        <div className="flex items-center justify-between border-t border-[#1C1C1C] pt-3 md:pt-4 font-mono text-[10px] sm:text-[11px] text-[#555]">
+          <span>
+            <span className="hidden sm:inline">SCROLL DOWN </span>TO CYCLE PRINCIPLES
+          </span>
           <span>INDEX: RIGOROUS_DEFAULTS</span>
         </div>
       </div>

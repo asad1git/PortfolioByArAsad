@@ -55,7 +55,7 @@ export function ContactModal() {
       aria-labelledby="contact-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#050505]/95 p-4 backdrop-blur-2xl md:p-10"
     >
-      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col justify-between overflow-y-auto border border-[#242424] bg-[#0A0A0A] p-6 font-mono md:p-10">
+      <div className="relative flex max-h-[92svh] w-full max-w-2xl flex-col justify-between overflow-y-auto overscroll-contain border border-[#242424] bg-[#0A0A0A] p-5 font-mono sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#1A1A1A] pb-4">
           <div className="flex items-center space-x-2 text-xs text-[#B6FF3B]">
@@ -123,7 +123,7 @@ export function ContactModal() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ada Lovelace"
-                  className="mt-2 w-full border border-[#222] bg-[#0E0E0E] px-3.5 py-2.5 text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
+                  className="mt-2 w-full border border-[#222] bg-[#0E0E0E] px-3.5 py-2.5 text-base sm:text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
                 />
               </div>
 
@@ -138,7 +138,7 @@ export function ContactModal() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="engineer@domain.com"
-                  className="mt-2 w-full border border-[#222] bg-[#0E0E0E] px-3.5 py-2.5 text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
+                  className="mt-2 w-full border border-[#222] bg-[#0E0E0E] px-3.5 py-2.5 text-base sm:text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
                 />
               </div>
             </div>
@@ -154,7 +154,7 @@ export function ContactModal() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Describe your technical requirements, goals, or architecture needs..."
-                className="mt-2 w-full border border-[#222] bg-[#0E0E0E] p-3.5 text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
+                className="mt-2 w-full border border-[#222] bg-[#0E0E0E] p-3.5 text-base sm:text-xs text-[#F2F2F2] placeholder-[#444] focus:border-[#B6FF3B] focus:outline-none"
               />
             </div>
 

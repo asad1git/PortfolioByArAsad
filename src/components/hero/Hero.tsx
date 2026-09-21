@@ -105,7 +105,7 @@ export function Hero() {
         <h1
           ref={titleRef}
           className="editorial-title w-fit cursor-default select-none font-bold text-[#F2F2F2] opacity-0"
-          style={{ fontSize: "clamp(3rem, 8.5vw, 8.5rem)", lineHeight: 0.9 }}
+          style={{ fontSize: "clamp(2.5rem, 8.5vw, 8.5rem)", lineHeight: 0.9 }}
         >
           <span
             onMouseEnter={() => setCursor("hover", "ABDUL RAHMAN")}

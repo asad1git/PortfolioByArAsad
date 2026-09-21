@@ -36,8 +36,11 @@ export function SystemHeader() {
             href="#hero"
             className="flex items-center space-x-2 text-[#F2F2F2] transition-colors hover:text-[#B6FF3B]"
           >
-            <span className="h-2 w-2 bg-[#B6FF3B] inline-block animate-pulse" />
-            <span className="font-semibold tracking-widest text-[#F2F2F2]">ABDUL RAHMAN ASAD / SYSTEM</span>
+            <span className="h-2 w-2 bg-[#B6FF3B] inline-block animate-pulse shrink-0" />
+            <span className="font-semibold tracking-widest text-[#F2F2F2] truncate">
+              <span className="hidden sm:inline">ABDUL RAHMAN ASAD / SYSTEM</span>
+              <span className="sm:hidden">AR ASAD / SYS</span>
+            </span>
           </a>
           <span className="hidden text-[#404040] md:inline">|</span>
           <span className="hidden text-[#8A8A8A] md:inline">{activeSection}</span>

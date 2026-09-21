@@ -30,7 +30,7 @@ export function Contact() {
         id="contact"
         ref={sectionRef}
         data-component="<Contact />"
-        className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-32 md:px-8 flex flex-col justify-between"
+        className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-16 md:px-8 md:py-32 flex flex-col justify-between"
       >
         {/* Top Header */}
         <div className="flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
@@ -41,19 +41,20 @@ export function Contact() {
           </div>
           <div className="flex items-center space-x-2 text-[#555]">
             <Sparkles className="h-3.5 w-3.5 text-[#B6FF3B]" />
-            <span>OPEN FOR HIGH-IMPACT PROJECTS</span>
+            <span className="hidden sm:inline">OPEN FOR HIGH-IMPACT PROJECTS</span>
+            <span className="sm:hidden">AVAILABLE</span>
           </div>
         </div>
 
         {/* Central Massive Editorial Call-to-Action */}
-        <div className="my-auto max-w-5xl py-12">
+        <div className="my-auto max-w-5xl py-8 md:py-12">
           <p className="font-mono text-xs tracking-widest text-[#8A8A8A] uppercase md:text-sm">
             HAVE AN IDEA?
           </p>
 
           <h2
             className="editorial-title mt-4 font-bold text-[#F2F2F2]"
-            style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 9.5vw, 10rem)" }}
           >
             LET&apos;S BUILD IT.
           </h2>

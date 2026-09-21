@@ -49,7 +49,7 @@ export function Timeline() {
       id="timeline"
       ref={sectionRef}
       data-component="<Timeline />"
-      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-28 md:px-8"
+      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-16 md:px-8 md:py-28"
     >
       {/* Top Header */}
       <div className="flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
@@ -65,7 +65,7 @@ export function Timeline() {
       </div>
 
       <div className="mt-8 max-w-2xl">
-        <h2 className="font-display text-4xl font-bold tracking-tight text-[#F2F2F2] md:text-6xl">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-[#F2F2F2]">
           System Log
         </h2>
         <p className="mt-3 font-mono text-xs text-[#8A8A8A]">
@@ -74,7 +74,7 @@ export function Timeline() {
       </div>
 
       {/* Timeline Entries List */}
-      <div ref={listRef} className="relative mt-16 border-l border-[#1C1C1C] pl-6 md:pl-10 space-y-12">
+      <div ref={listRef} className="relative mt-10 md:mt-16 border-l border-[#1C1C1C] pl-6 md:pl-10 space-y-10 md:space-y-12">
         {timelineEntries.map((entry) => (
           <div
             key={entry.id}

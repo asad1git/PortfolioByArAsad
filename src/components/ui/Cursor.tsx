@@ -15,11 +15,12 @@ export function Cursor() {
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Check prefers-reduced-motion
+    // Check prefers-reduced-motion or touch devices
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    if (prefersReducedMotion) return;
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (prefersReducedMotion || isTouch) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;

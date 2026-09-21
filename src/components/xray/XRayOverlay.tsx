@@ -74,7 +74,7 @@ export function XRayOverlay() {
   return (
     <aside
       aria-label="X-Ray Runtime Diagnostics"
-      className="fixed bottom-6 right-6 z-50 border border-[#B6FF3B]/40 bg-[#050505]/95 p-4 font-mono text-[10px] text-[#8A8A8A] shadow-[0_0_24px_rgba(0,0,0,0.8)] backdrop-blur-md"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 max-w-[calc(100vw-2rem)] border border-[#B6FF3B]/40 bg-[#050505]/95 p-3 sm:p-4 font-mono text-[10px] text-[#8A8A8A] shadow-[0_0_24px_rgba(0,0,0,0.8)] backdrop-blur-md"
     >
       <div className="mb-3 flex items-center justify-between border-b border-[#1F1F1F] pb-2">
         <span className="font-semibold tracking-wider text-[#B6FF3B]">DIAGNOSTICS / X-RAY</span>

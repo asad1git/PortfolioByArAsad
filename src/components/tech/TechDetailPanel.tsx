@@ -31,7 +31,7 @@ export function TechDetailPanel({ technology, onClose }: TechDetailPanelProps) {
     let initialTouchY: number | null = null;
 
     const handleScroll = () => {
-      if (Math.abs(window.scrollY - initialY) > 15) {
+      if (Math.abs(window.scrollY - initialY) > 60) {
         onClose();
       }
     };
@@ -41,7 +41,7 @@ export function TechDetailPanel({ technology, onClose }: TechDetailPanelProps) {
       if (panelRef.current && panelRef.current.contains(e.target as Node)) {
         return;
       }
-      if (Math.abs(e.deltaY) > 4) {
+      if (Math.abs(e.deltaY) > 10) {
         onClose();
       }
     };
@@ -58,7 +58,7 @@ export function TechDetailPanel({ technology, onClose }: TechDetailPanelProps) {
       }
       if (initialTouchY !== null && e.touches[0]) {
         const diff = Math.abs(e.touches[0].clientY - initialTouchY);
-        if (diff > 20) {
+        if (diff > 50) {
           onClose();
         }
       }

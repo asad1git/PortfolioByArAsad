@@ -30,7 +30,7 @@ export function Lab() {
       id="lab"
       ref={sectionRef}
       data-component="<Lab />"
-      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-28 md:px-8"
+      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-16 md:px-8 md:py-28"
     >
       {/* Section Header */}
       <div className="flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
@@ -46,7 +46,7 @@ export function Lab() {
       </div>
 
       <div className="mt-8 max-w-3xl">
-        <h2 className="font-display text-4xl font-bold tracking-tight text-[#F2F2F2] md:text-6xl">
+        <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-[#F2F2F2]">
           EXPERIMENT LAB
         </h2>
         <p className="mt-4 font-mono text-sm tracking-wide text-[#8A8A8A] md:text-base">
@@ -55,7 +55,7 @@ export function Lab() {
       </div>
 
       {/* Experiments Grid */}
-      <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-12 md:mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {experiments.map((exp) => (
           <div
             key={exp.id}

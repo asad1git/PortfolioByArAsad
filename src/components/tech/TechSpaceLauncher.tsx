@@ -94,9 +94,10 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
   // Compute 2D organic galaxy coordinates for planets (randomized & not aligned)
   const updatePlanetLayout = (w: number, h: number) => {
     const isSmall = w < 768;
-    const startX = isSmall ? w * 0.34 : w * 0.28;
-    const availableW = w - startX - (isSmall ? 25 : 60);
-    const availableH = h - 120;
+    const isVerySmall = w < 480;
+    const startX = isVerySmall ? w * 0.22 : isSmall ? w * 0.30 : w * 0.28;
+    const availableW = w - startX - (isVerySmall ? 15 : isSmall ? 25 : 60);
+    const availableH = h - (isVerySmall ? 75 : 120);
 
     // Organic scattered coordinates across space (non-aligned, varied depths)
     const planetCoords: Record<string, { u: number; v: number; sizeBonus?: number }> = {
@@ -120,10 +121,10 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
     technologies.forEach((tech) => {
       const cfg = planetCoords[tech.id] || { u: 0.5, v: 0.5 };
       const posX = startX + cfg.u * availableW;
-      const posY = 55 + cfg.v * availableH;
+      const posY = (isVerySmall ? 40 : 55) + cfg.v * availableH;
 
       const colorSet = planetColors[tech.id] || { base: "#B6FF3B", glow: "rgba(182,255,59,0.3)" };
-      const baseRadius = isSmall ? 18 : 22;
+      const baseRadius = isVerySmall ? 11 : isSmall ? 16 : 22;
       const radius = baseRadius + (cfg.sizeBonus ?? 0);
 
       list.push({
@@ -148,7 +149,8 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
     if (!canvas) return;
 
     const isSmall = canvas.width < 768;
-    const shipX = isSmall ? 65 : 120;
+    const isVerySmall = canvas.width < 480;
+    const shipX = isVerySmall ? 34 : isSmall ? 65 : 120;
     const shipY = canvas.height * 0.5;
 
     // Calculate nozzle position using current ship angle
@@ -237,15 +239,15 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
         }
       }
     };
-
-    const onClick = (e: MouseEvent) => {
+ 
+    const onPointerAction = (e: MouseEvent | PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
 
       for (const p of planetsRef.current) {
         const dist = Math.hypot(p.x - mx, p.y - my);
-        if (dist <= p.radius + 16) {
+        if (dist <= p.radius + 18) {
           fireProjectile(p, true);
           onSelectTech(p.tech);
           break;
@@ -254,7 +256,8 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
     };
 
     canvas.addEventListener("mousemove", onPointerMove);
-    canvas.addEventListener("click", onClick);
+    canvas.addEventListener("click", onPointerAction);
+    canvas.addEventListener("pointerdown", onPointerAction, { passive: true });
 
     // Initial volley on mount
     setTimeout(() => {
@@ -506,18 +509,31 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
         ctx.fill();
 
         // Planet Text Label
-        ctx.font = isHighlighted
-          ? "bold 12px var(--font-jetbrains-mono), monospace"
-          : "11px var(--font-jetbrains-mono), monospace";
+        const isVerySmall = w < 480;
+        const displayName = isVerySmall
+          ? p.tech.id === "threejs"
+            ? "Three.js"
+            : p.tech.id === "docker"
+            ? "Docker"
+            : p.tech.id === "mongodb"
+            ? "MongoDB"
+            : p.tech.name
+          : p.tech.name;
+
+        ctx.font = isVerySmall
+          ? (isHighlighted ? "bold 10px var(--font-jetbrains-mono), monospace" : "9px var(--font-jetbrains-mono), monospace")
+          : (isHighlighted ? "bold 12px var(--font-jetbrains-mono), monospace" : "11px var(--font-jetbrains-mono), monospace");
         ctx.fillStyle = isHighlighted ? "#B6FF3B" : "#E2E2E2";
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        ctx.fillText(p.tech.name, p.x, p.y + r + 10);
+        ctx.fillText(displayName, p.x, p.y + r + (isVerySmall ? 6 : 10));
 
-        // Category Sublabel
-        ctx.font = "9px var(--font-jetbrains-mono), monospace";
-        ctx.fillStyle = isHighlighted ? "#F2F2F2" : "#666666";
-        ctx.fillText(p.tech.category.toUpperCase(), p.x, p.y + r + 24);
+        // Category Sublabel (desktop/tablet only to keep mobile clean)
+        if (!isVerySmall) {
+          ctx.font = "9px var(--font-jetbrains-mono), monospace";
+          ctx.fillStyle = isHighlighted ? "#F2F2F2" : "#666666";
+          ctx.fillText(p.tech.category.toUpperCase(), p.x, p.y + r + 24);
+        }
       });
 
       // 6. Draw Spaceship on the Left (Abdul Rahman Asad / Core Command)
@@ -576,19 +592,20 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
       ctx.restore();
 
       // Spaceship Label Banner (kept horizontal and crisp)
-      ctx.font = "bold 10px var(--font-jetbrains-mono), monospace";
+      const isVerySmallShip = w < 480;
+      ctx.font = isVerySmallShip ? "bold 8.5px var(--font-jetbrains-mono), monospace" : "bold 10px var(--font-jetbrains-mono), monospace";
       ctx.fillStyle = "#B6FF3B";
       ctx.textAlign = "center";
-      ctx.fillText("ABDUL RAHMAN ASAD", shipX, shipY + 46);
+      ctx.fillText(isVerySmallShip ? "AR ASAD" : "ABDUL RAHMAN ASAD", shipX, shipY + (isVerySmallShip ? 38 : 46));
 
-      ctx.font = "8px var(--font-jetbrains-mono), monospace";
+      ctx.font = isVerySmallShip ? "7px var(--font-jetbrains-mono), monospace" : "8px var(--font-jetbrains-mono), monospace";
       ctx.fillStyle = "#777777";
       ctx.fillText(
         activeAimTarget
-          ? `LOCK // ${activeAimTarget.tech.name.toUpperCase()}`
-          : "CORE CRAFT // EMITTER",
+          ? (isVerySmallShip ? `LOCK // ${activeAimTarget.tech.id.toUpperCase()}` : `LOCK // ${activeAimTarget.tech.name.toUpperCase()}`)
+          : (isVerySmallShip ? "EMITTER" : "CORE CRAFT // EMITTER"),
         shipX,
-        shipY + 58
+        shipY + (isVerySmallShip ? 48 : 58)
       );
 
       rafRef.current = requestAnimationFrame(render);
@@ -599,7 +616,8 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
     return () => {
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", onPointerMove);
-      canvas.removeEventListener("click", onClick);
+      canvas.removeEventListener("click", onPointerAction);
+      canvas.removeEventListener("pointerdown", onPointerAction);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [hoveredTechId, onSelectTech, setCursor, resetCursor]);
@@ -607,7 +625,7 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
   return (
     <div className="relative w-full">
       {/* Top Controls & Telemetry */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[#8A8A8A]">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] sm:text-[11px] text-[#8A8A8A]">
         <div className="flex items-center space-x-2">
           <Crosshair className="h-3.5 w-3.5 text-[#B6FF3B]" />
           <span>ORIGIN: ABDUL RAHMAN ASAD [MOTHERSHIP]</span>
@@ -627,13 +645,14 @@ export function TechSpaceLauncher({ onSelectTech, selectedTechId }: TechSpaceLau
       {/* 2D Interactive Space Canvas */}
       <div
         ref={containerRef}
-        className="relative h-[560px] w-full overflow-hidden border border-[#1C1C1C] bg-[#050505] shadow-[0_0_30px_rgba(0,0,0,0.8)] md:h-[620px]"
+        className="relative h-[480px] sm:h-[560px] md:h-[620px] w-full overflow-hidden border border-[#1C1C1C] bg-[#050505] shadow-[0_0_30px_rgba(0,0,0,0.8)]"
       >
         {/* 3D Particle Field dots from Hero section strictly inside radar projection section */}
         <TechParticleScene opacity={0.85} count={2600} />
 
         <canvas
           ref={canvasRef}
+          style={{ touchAction: "pan-y" }}
           className="absolute inset-0 z-10 h-full w-full cursor-crosshair"
         />
 

@@ -95,10 +95,10 @@ export function Identity() {
       id="identity"
       ref={sectionRef}
       data-component="<Identity />"
-      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-28 md:px-8"
+      className="relative z-20 min-h-screen border-t border-[#1C1C1C] px-4 py-16 md:px-8 md:py-28"
     >
       {/* Section Header */}
-      <div className="mb-16 flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
+      <div className="mb-10 md:mb-16 flex items-center justify-between font-mono text-[11px] tracking-widest text-[#8A8A8A]">
         <div className="flex items-center space-x-3">
           <span className="text-[#B6FF3B]">01 / IDENTITY</span>
           <span className="text-[#404040]">::</span>
@@ -111,7 +111,7 @@ export function Identity() {
       <div className="max-w-5xl">
         <h2
           ref={statementRef}
-          className="font-display text-3xl font-medium leading-[1.12] tracking-[-0.02em] text-[#F2F2F2] md:text-5xl lg:text-6xl"
+          className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.15] tracking-[-0.02em] text-[#F2F2F2]"
         >
           &ldquo;I build software that turns ideas into{" "}
           <span className="text-[#B6FF3B] underline underline-offset-8 decoration-1 decoration-[#B6FF3B]/50">
@@ -124,7 +124,7 @@ export function Identity() {
       {/* Three Interactive Blocks */}
       <div
         ref={cardsRef}
-        className="mt-20 grid grid-cols-1 gap-px bg-[#1C1C1C] md:grid-cols-3"
+        className="mt-12 md:mt-20 grid grid-cols-1 gap-px bg-[#1C1C1C] md:grid-cols-3"
       >
         {blocks.map((block, idx) => {
           const Icon = block.icon;
@@ -141,7 +141,7 @@ export function Identity() {
                 setActiveBlock(null);
                 resetCursor();
               }}
-              className={`group relative flex flex-col justify-between bg-[#0A0A0A] p-8 transition-colors duration-300 md:p-10 ${
+              className={`group relative flex flex-col justify-between bg-[#0A0A0A] p-6 transition-colors duration-300 sm:p-8 md:p-10 ${
                 isHovered ? "bg-[#101010]" : "hover:bg-[#0E0E0E]"
               }`}
             >
@@ -174,11 +174,11 @@ export function Identity() {
               </div>
 
               {/* Sub-list details revealed on hover */}
-              <div className="mt-10 border-t border-[#161616] pt-6 font-mono text-[11px] text-[#6A6A6A]">
+              <div className="mt-8 md:mt-10 border-t border-[#161616] pt-6 font-mono text-[11px] text-[#8A8A8A] md:text-[#6A6A6A]">
                 <div className="space-y-1.5">
                   {block.details.map((item, i) => (
                     <div key={i} className="flex items-center space-x-2">
-                      <span className="h-1 w-1 bg-[#B6FF3B]" />
+                      <span className="h-1 w-1 bg-[#B6FF3B] shrink-0" />
                       <span className={isHovered ? "text-[#F2F2F2]" : ""}>{item}</span>
                     </div>
                   ))}
